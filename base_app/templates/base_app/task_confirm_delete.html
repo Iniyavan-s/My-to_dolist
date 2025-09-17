@@ -1,0 +1,11 @@
+{% extends 'base_app/main.html' %}
+{% block content %}
+<a href="{% url 'tasks' %}" class="go-back-link">Go back</a>
+<h3 style="margin-top: 1rem;">Delete Task</h3>
+<p class="message-p">Are you sure you want to delete the task named "<strong style="color: #c0392b;">{{ task }}</strong>"?</p>
+<form method="post" action="">
+    {% csrf_token %}
+    <input type="submit" value="Delete" class="form-submit-button" style="background: #e74c3c;">
+</form>
+{% endblock content %}
+

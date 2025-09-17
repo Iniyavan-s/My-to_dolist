@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Nunito Sans", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8, #c1d5e0);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInBackground 1.5s ease-in-out;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            width: 95%;
+            max-width: 650px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        h3::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .welcome-text {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+        }
+
+        .user-name {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .logout-form input[type="submit"] {
+           background: transparent;
+           color: #3498db;
+           border: none;
+           cursor: pointer;
+           font-weight: 500;
+           transition: color 0.3s ease;
+           font-size: large;
+        }
+
+        .logout-form input[type="submit"]:hover {
+            background: transparent;
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        form {
+            margin-top: 1.5rem;
+        }
+        
+
+        form p, .go-back-link {
+            margin-bottom: 1rem;
+        }
+
+        form input[type="text"],
+        form input[type="password"],
+        form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 0.3rem 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        form input:focus, form textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .form-submit-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0px 30px;
+            border-radius: 8px;
+            transition: background 0.3s ease, transform 0.2s ease;
+            width: auto;
+            height:50px
+        }
+
+        .form-submit-button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .search-form {
+            display: flex;
+            gap: 7px;
+            margin-top: 1.5rem;
+        }
+
+        .search-form input[type="text"] {
+            flex-grow: 1;
+        }
+
+        .add-task-link {
+            display: inline-block;
+            background: #2ecc71;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        
+        .add-task-link:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            margin-top: 1.5rem;
+        }
+
+        tr {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        tr:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        td {
+            padding: 15px;
+            border: 1px solid #f0f0f0;
+            border-left: none;
+            border-right: none;
+        }
+        
+        td:first-child {
+            border-left: 1px solid #f0f0f0;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+        
+        td:last-child {
+            border-right: 1px solid #f0f0f0;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .task-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .task-actions a {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            background: #f1f1f1;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .task-actions a:hover {
+            background: #dcdcdc;
+            text-decoration: none;
+        }
+         .task-actions a[href*="delete"] {
+            color: #ed250f; 
+            background: #f09898; 
+        }
+        
+        .task-actions a[href*="delete"]:hover {
+            background: #f47777;
+        }
+
+        .completed-task {
+            text-decoration: line-through;
+            color: #95a5a6;
+            background-color: #ecf0f1;
+        }
+
+        .completed-task .task-title {
+            text-decoration: line-through;
+        }
+
+        .empty-list {
+            text-align: center;
+            color: #aaa;
+            font-style: italic;
+            margin-top: 2rem;
+            padding: 20px;
+            background: #fdfdfd;
+            border-radius: 8px;
+        }
+        
+        .message-p {
+            text-align: center;
+            margin-top: 1rem;
+            color: #777;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInBackground {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</body>
+</html>

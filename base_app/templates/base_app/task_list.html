@@ -1,0 +1,54 @@
+{% extends 'base_app/main.html' %}
+{% block content %}
+
+<div class="header-section">
+    {% if request.user.is_authenticated %}
+        <div class="user-info">
+            <span class="welcome-text">Welcome,</span>
+            <span class="user-name">{{ request.user|title }}</span>
+        </div>
+        
+        <form method="post" action="{% url 'logout' %}" class="logout-form">
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+
+<h3>My To-Do List</h3>
+<h4>You have <strong style="color: #c0392b;">{{count}}</strong> incomplete task{{count|pluralize:"s"}}</h4>
+
+
+<form method="get">
+    <div class="search-form">
+        <input type="text" name="search-value" value="{{ search_input }}" placeholder="Search tasks...">
+        <input type="submit" value="Search" class="form-submit-button">
+    </div>
+</form>
+<p>
+    <a href="{% url 'create-task' %}" class="add-task-link">➕ Add Task</a>
+</p>
+
+{% if not object_list %}
+    <p class="empty-list">No tasks found. Get started by adding a new task!</p>
+{% else %}
+    <table>
+        <tbody>
+            {% for task in object_list %}
+                <tr {% if task.complete %}class="completed-task"{% endif %}>
+                    <td>
+                        <span class="task-title">{{ task.title }}</span>
+                    </td>
+                    <td class="task-actions">
+                        <a href="{% url 'task-update' task.id %}">✏️Edit</a>
+                        <a href="{% url 'task-delete' task.id %}">🗑️</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock content %}

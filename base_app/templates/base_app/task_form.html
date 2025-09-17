@@ -1,0 +1,10 @@
+{% extends 'base_app/main.html' %}
+{% block content %}
+<a href="{% url 'tasks' %}" class="go-back-link">Go back</a>
+<h3>Create Task</h3>
+<form method="POST" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" class="form-submit-button">
+</form>
+{% endblock content %}
